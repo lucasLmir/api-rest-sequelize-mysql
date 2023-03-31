@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Turmas = sequelize.define(
     "Turmas",
     {
-      datainicio: DataTypes.DATEONLY,
+      data_inicio: DataTypes.DATEONLY,
     },
     {}
   );
