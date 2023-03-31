@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       status: DataTypes.STRING,
     },
-    {}
+    { paranoid: true }
   );
   Matriculas.associate = function (models) {
     // associations can be defined here
