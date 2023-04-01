@@ -3,7 +3,8 @@ const PessoaController = require("../controllers/PessoaController");
 
 const router = Router();
 
-router.get("/pessoas", PessoaController.pegaTodasAsPessoas);
+router.get("/pessoas", PessoaController.pegaPessoasAtivas);
+router.get("/pessoas/todos", PessoaController.pegaTodasAsPessoas);
 router.get("/pessoas/:id", PessoaController.pegaUmaPessoa);
 router.post("/pessoas", PessoaController.criaPessoa);
 router.put("/pessoas/:id", PessoaController.atualizaPessoa);
@@ -12,6 +13,7 @@ router.get(
   "/pessoas/:estudanteId/matricula/:matriculaId",
   PessoaController.pegaUmaMatricula
 );
+router.post("/pessoa/:id/restaura", PessoaController.restauraPessoa);
 router.post("/pessoas/:estudanteId/matricula/", PessoaController.criaMatricula);
 router.put(
   "/pessoas/:estudanteId/matricula/:matriculaId",
@@ -20,6 +22,10 @@ router.put(
 router.delete(
   "/pessoas/:estudanteId/matricula/:matriculaId",
   PessoaController.apagaMatricula
+);
+router.post(
+  "/pessoas/:estudanteId/matricula/:matriculaId/restaura",
+  PessoaController.restauraMatricula
 );
 
 module.exports = router;
