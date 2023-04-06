@@ -118,7 +118,7 @@ class PessoaController {
         having: Sequelize.literal(`count(turma_id) >= ${lotacaoTurma}
         `),
       });
-      res.status(200).json(turmasLotadas)
+      res.status(200).json(turmasLotadas);
     } catch (error) {
       return res.status(500).json(error.message);
     }
@@ -194,6 +194,28 @@ class PessoaController {
         },
       });
       return res.status(200).json({ mensagem: `id ${id} restaurado` });
+    } catch (error) {
+      return res.status(500).json(error.message);
+    }
+  }
+  static async cancelaPessoa(req, res) {
+    const { estudanteId } = req.params;
+    try {
+      database.sequelize.transaction(async (transacao) => {
+        await database.Pessoas.update(
+          { ativo: false },
+          { where: { id: Number(estudanteId) } },
+          { transaction: transacao }
+        );
+        await database.Matriculas.update(
+          { status: "cancelado" },
+          { where: { estudante_id: Number(estudanteId) } },
+          { transaction: transacao }
+        );
+        return res.status(200).json({
+          message: `Matrículas ref. estudante ${estudanteId} canceladas`,
+        });
+      });
     } catch (error) {
       return res.status(500).json(error.message);
     }
